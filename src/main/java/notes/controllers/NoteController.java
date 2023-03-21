@@ -1,50 +1,50 @@
 package notes.controllers;
 
 import notes.models.Note;
+import notes.models.Repository;
+import notes.models.ValidateNote;
+
+import java.util.List;
 
 public class NoteController {
     private final Repository repository;
+
+    private final ValidateNote validator = new ValidateNote();
+
     public NoteController(Repository repository) {
         this.repository = repository;
     }
 
     public void saveNote(Note note) throws Exception {
+        validator.check(note);
         repository.createNote(note);
     }
-    public void deleteNote(String noteId) throws Exception{
 
-        Note noteFind = getNoteById(noteId);
-
-        if (noteFind == null){
-            throw new Exception("Note not found");
-        }
-
-        repository.deleteNote(noteFind);
-    }
-
-    public Note readNote(String noteId) throws Exception{
-        Note noteFind = getNoteById(noteId);
-
-        if (noteFind == null){
-            throw new Exception("Note not found");
-        }
-
-        return noteFind;
-    }
-
-    public List<Note> getNotes() throws Exception{
-        return repository.getAllNotes();
-    }
-
-    public Note getNoteById(String noteId) throws Exception {
+    public Note readNote(String noteId) throws Exception {
         List<Note> notes = repository.getAllNotes();
-        Note noteFind = null;
         for (Note note : notes) {
             if (note.getId().equals(noteId)) {
-                noteFind = note;
-                break;
+                return note;
             }
         }
-        return noteFind;
+        throw new Exception("Контакт не найден");
+    }
+
+    public List<Note> readNotes() {
+        List<Note> notes = repository.getAllNotes();
+        return notes;
+    }
+
+    public void deleteNote(String noteId) {
+        repository.deleteNote(noteId);
+    }
+    public void updateNoteTitle(String noteId) {
+        repository.updateNoteTitle(noteId);
+    }
+    public void updateNoteText(String noteId) {
+        repository.updateNoteText(noteId);
+    }
+    public void updateNoteDate(String noteId) {
+        repository.updateNoteDate(noteId);
     }
 }

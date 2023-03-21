@@ -1,19 +1,19 @@
 package notes.models;
 
-
-import java.text.DateFormat;
-
 public class Note {
     private String id = "";
     private String title;
     private String text;
     private String date;
 
-    public Note(String id, String title, String text, String date) {
-        this.id = id;
+    public Note(String title, String text, String date) {
         this.title = title;
         this.text = text;
         this.date = date;
+    }
+    public Note(String id, String title, String text, String data) {
+        this(title, text, data);
+        this.id = id;
     }
 
     public String getId() {
@@ -40,11 +40,14 @@ public class Note {
         this.text = text;
     }
 
-    public DateFormat getDate() {
+    public String getDate() {
         return date;
     }
 
-    public void setDate(DateFormat date) {
+    public void setDate(String date) {
         this.date = date;
+    }
+
+    public static class Repository {
     }
 }
