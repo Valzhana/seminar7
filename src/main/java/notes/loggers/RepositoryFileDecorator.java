@@ -1,14 +1,26 @@
-package notes.models;
+package notes.loggers;
 
+import notes.models.FileOperation;
+import notes.models.Mapper;
+import notes.models.Note;
+import notes.models.Repository;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
 
-public class RepositoryFile implements Repository {
+public class RepositoryFileDecorator implements Repository {
+    private final Repository repository;
+    private final Logable logable;
+
+
+    public RepositoryFileDecorator(Repository repository, Logable logable) {
+        this.repository = repository;
+        this.logable = logable;
+    }
     private Mapper mapper;
     private FileOperation fileOperation;
-    public RepositoryFile(FileOperation fileOperation, Mapper mapper) {
+    public void RepositoryFile(FileOperation fileOperation, Mapper mapper) {
         this.fileOperation = fileOperation;
         this.mapper = mapper;
     }
@@ -41,6 +53,7 @@ public class RepositoryFile implements Repository {
         saveRepository(notes);
         return id;
     }
+
     private void saveRepository(List<Note> notes) {
         List<String> lines = new ArrayList<>();
         for (Note item : notes) {
@@ -48,6 +61,7 @@ public class RepositoryFile implements Repository {
         }
         fileOperation.saveAllLines(lines);
     }
+
     @Override
     public void deleteNote(String noteId) {
         List<Note> notes = getAllNotes();
@@ -79,6 +93,7 @@ public class RepositoryFile implements Repository {
         }
         saveRepository(notes);
     }
+
     @Override
     public void updateNoteText(String noteId) {
         List<Note> notes = getAllNotes();
@@ -94,6 +109,7 @@ public class RepositoryFile implements Repository {
         }
         saveRepository(notes);
     }
+
     @Override
     public void updateNoteDate(String noteId) {
         List<Note> notes = getAllNotes();

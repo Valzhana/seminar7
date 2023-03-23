@@ -7,21 +7,22 @@ import notes.models.ValidateNote;
 import java.util.List;
 
 public class NoteController {
-    private final Repository repository;
+
+    private final Repository repositoryFileDecorator;
 
     private final ValidateNote validator = new ValidateNote();
 
     public NoteController(Repository repository) {
-        this.repository = repository;
+        this.repositoryFileDecorator = repository;
     }
 
     public void saveNote(Note note) throws Exception {
         validator.check(note);
-        repository.createNote(note);
+        repositoryFileDecorator.createNote(note);
     }
 
     public Note readNote(String noteId) throws Exception {
-        List<Note> notes = repository.getAllNotes();
+        List<Note> notes = repositoryFileDecorator.getAllNotes();
         for (Note note : notes) {
             if (note.getId().equals(noteId)) {
                 return note;
@@ -31,20 +32,20 @@ public class NoteController {
     }
 
     public List<Note> readNotes() {
-        List<Note> notes = repository.getAllNotes();
+        List<Note> notes = repositoryFileDecorator.getAllNotes();
         return notes;
     }
 
     public void deleteNote(String noteId) {
-        repository.deleteNote(noteId);
+        repositoryFileDecorator.deleteNote(noteId);
     }
     public void updateNoteTitle(String noteId) {
-        repository.updateNoteTitle(noteId);
+        repositoryFileDecorator.updateNoteTitle(noteId);
     }
     public void updateNoteText(String noteId) {
-        repository.updateNoteText(noteId);
+        repositoryFileDecorator.updateNoteText(noteId);
     }
     public void updateNoteDate(String noteId) {
-        repository.updateNoteDate(noteId);
+        repositoryFileDecorator.updateNoteDate(noteId);
     }
 }
