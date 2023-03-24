@@ -1,9 +1,17 @@
 package notes.models;
 
 
-import java.util.List;
+public class Note {
+    @Override
+    public String toString() {
+        return "Note{" +
+                "id='" + id + '\'' +
+                ", title='" + title + '\'' +
+                ", text='" + text + '\'' +
+                ", date='" + date + '\'' +
+                '}';
+    }
 
-public class Note implements Repository {
     private String id = "";
     private String title;
     private String text;
@@ -51,33 +59,4 @@ public class Note implements Repository {
         this.date = date;
     }
 
-    @Override
-    public List<Note> getAllNotes() {
-        return null;
-    }
-
-    @Override
-    public String createNote(Note note) {
-        return null;
-    }
-
-    @Override
-    public void deleteNote(String noteId) {
-
-    }
-
-    @Override
-    public void updateNoteTitle(String noteId) {
-
-    }
-
-    @Override
-    public void updateNoteText(String userId) {
-
-    }
-
-    @Override
-    public void updateNoteDate(String userId) {
-
-    }
 }

@@ -4,7 +4,7 @@ import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class FileOperationImpl implements FileOperation {
+public class FileOperationImpl extends NoteMapper implements FileOperation {
     private String fileName;
 
     public FileOperationImpl(String fileName) {
@@ -20,17 +20,13 @@ public class FileOperationImpl implements FileOperation {
         List<String> lines = new ArrayList<>();
         try {
             File file = new File(fileName);
-            //создаем объект FileReader для объекта File
             FileReader fr = new FileReader(file);
-            //создаем BufferedReader с существующего FileReader для построчного считывания
             BufferedReader reader = new BufferedReader(fr);
-            // считаем сначала первую строку
             String line = reader.readLine();
             if (line != null) {
                 lines.add(line);
             }
             while (line != null) {
-                // считываем остальные строки в цикле
                 line = reader.readLine();
                 if (line != null) {
                     lines.add(line);
@@ -48,14 +44,23 @@ public class FileOperationImpl implements FileOperation {
     public void saveAllLines(List<String> lines) {
         try (FileWriter writer = new FileWriter(fileName, false)) {
             for (String line : lines) {
-                // запись всей строки
                 writer.write(line);
-                // запись по символам
                 writer.append('\n');
             }
             writer.flush();
         } catch (IOException ex) {
             System.out.println(ex.getMessage());
         }
+    }
+
+    @Override
+    public String map(Note note) {
+        return String.format("%s,%s,%s,%s", note.getId(), note.getTitle(), note.getText(), note.getDate());
+    }
+
+    @Override
+    public Note map(String line) {
+        String[] lines = line.split(",");
+        return new Note(lines[0], lines[1], lines[2], lines[3]);
     }
 }

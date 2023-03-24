@@ -8,44 +8,44 @@ import java.util.List;
 
 public class NoteController {
 
-    private final Repository repositoryFileDecorator;
+    private final Repository repository;
 
     private final ValidateNote validator = new ValidateNote();
 
     public NoteController(Repository repository) {
-        this.repositoryFileDecorator = repository;
+        this.repository = repository;
     }
 
     public void saveNote(Note note) throws Exception {
         validator.check(note);
-        repositoryFileDecorator.createNote(note);
+        repository.createNote(note);
     }
 
     public Note readNote(String noteId) throws Exception {
-        List<Note> notes = repositoryFileDecorator.getAllNotes();
+        List<Note> notes = repository.getAllNotes();
         for (Note note : notes) {
             if (note.getId().equals(noteId)) {
                 return note;
             }
         }
-        throw new Exception("Контакт не найден");
+        throw new Exception("Запись не найдена");
     }
 
     public List<Note> readNotes() {
-        List<Note> notes = repositoryFileDecorator.getAllNotes();
+        List<Note> notes = repository.getAllNotes();
         return notes;
     }
 
     public void deleteNote(String noteId) {
-        repositoryFileDecorator.deleteNote(noteId);
+        repository.deleteNote(noteId);
     }
     public void updateNoteTitle(String noteId) {
-        repositoryFileDecorator.updateNoteTitle(noteId);
+        repository.updateNoteTitle(noteId);
     }
     public void updateNoteText(String noteId) {
-        repositoryFileDecorator.updateNoteText(noteId);
+        repository.updateNoteText(noteId);
     }
     public void updateNoteDate(String noteId) {
-        repositoryFileDecorator.updateNoteDate(noteId);
+        repository.updateNoteDate(noteId);
     }
 }

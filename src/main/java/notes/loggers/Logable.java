@@ -1,5 +1,5 @@
 package notes.loggers;
 
 public interface Logable {
-    void writeLog(String log);
+    public void writeLog(String log);
 }

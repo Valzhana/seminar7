@@ -1,5 +1,6 @@
 package notes.models;
 
+
 public class NoteMapper implements Mapper {
     @Override
     public String map(Note note) {
